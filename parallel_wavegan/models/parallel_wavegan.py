@@ -7,15 +7,20 @@
 
 import logging
 import math
+from parallel_wavegan.models.asr.jasper import MaskedConv1d
 
 import numpy as np
 import torch
+
+from omegaconf import DictConfig, ListConfig, OmegaConf
+from collections import OrderedDict
 
 from parallel_wavegan.layers import Conv1d
 from parallel_wavegan.layers import Conv1d1x1
 from parallel_wavegan.layers import ResidualBlock
 from parallel_wavegan.layers import upsample
 from parallel_wavegan import models
+from parallel_wavegan.models.asr.encoder import ConvASREncoder
 
 
 class ParallelWaveGANGenerator(torch.nn.Module):
@@ -39,6 +44,10 @@ class ParallelWaveGANGenerator(torch.nn.Module):
                  upsample_conditional_features=True,
                  upsample_net="ConvInUpsampleNetwork",
                  upsample_params={"upsample_scales": [4, 4, 4, 4]},
+                 use_asr_layer=False,
+                 asr_config=None,
+                 asr_pretrained_file=None,
+                 asr_feature_layer_nth=-1
                  ):
         """Initialize Parallel WaveGAN Generator module.
 
@@ -128,6 +137,22 @@ class ParallelWaveGANGenerator(torch.nn.Module):
             Conv1d1x1(skip_channels, out_channels, bias=True),
         ])
 
+        if use_asr_layer:
+            conf = OmegaConf.load(asr_config)
+            encoder_conf = conf.model.encoder
+            jasper = encoder_conf.jasper
+            feat_in = encoder_conf.feat_in
+            activation = encoder_conf.activation
+            conv_mask = encoder_conf.conv_mask
+            self.asr_layer = ConvASREncoder(jasper, activation, feat_in, conv_mask=conv_mask)
+            for m in self.asr_layer.modules():
+                if isinstance(m, MaskedConv1d):
+                    m.use_mask = False
+        else:
+            self.asr_layer = None
+
+        self.asr_feature_layer_nth = asr_feature_layer_nth
+
         # apply weight norm
         if use_weight_norm:
             self.apply_weight_norm()
@@ -143,9 +168,18 @@ class ParallelWaveGANGenerator(torch.nn.Module):
             Tensor: Output tensor (B, out_channels, T)
 
         """
-        # perform upsampling
+
+        if c is not None and self.asr_layer is not None:
+            c, _ = self.asr_layer.encoder[0:self.asr_feature_layer_nth](([c], None))
+
+        #TODO このコードがなぜ必要かよくわからない
+        if c is list:
+            assert len(c) == 1
+        c = c[0]
+
         if c is not None and self.upsample_net is not None:
             c = self.upsample_net(c)
+            print(c.shape)
             assert c.size(-1) == x.size(-1)
 
         # encode to hidden representation

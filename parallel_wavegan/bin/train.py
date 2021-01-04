@@ -568,8 +568,14 @@ class Collater(object):
             self.start_offset, cl + self.end_offset) for cl in c_lengths])
         x_starts = start_frames * self.hop_size
         x_ends = x_starts + self.batch_max_steps
+
         c_starts = start_frames - self.aux_context_window
         c_ends = start_frames + self.batch_max_frames + self.aux_context_window
+
+        #NOTE: nemo用
+        # c_starts = x_starts // 320
+        # c_ends = x_ends // 320
+
         y_batch = [x[start: end] for x, start, end in zip(xs, x_starts, x_ends)]
         c_batch = [c[start: end] for c, start, end in zip(cs, c_starts, c_ends)]
 
@@ -597,7 +603,7 @@ class Collater(object):
             x = np.pad(x, (0, len(c) * self.hop_size - len(x)), mode="edge")
 
         # check the legnth is valid
-        assert len(x) == len(c) * self.hop_size
+        # assert len(x) == len(c) * self.hop_size
 
         return x, c
 
@@ -709,8 +715,9 @@ def main():
     if args.train_wav_scp is None or args.dev_wav_scp is None:
         if config["format"] == "hdf5":
             audio_query, mel_query = "*.h5", "*.h5"
-            audio_load_fn = lambda x: read_hdf5(x, "wave")  # NOQA
-            mel_load_fn = lambda x: read_hdf5(x, "feats")  # NOQA
+            feat_query = config["feat_query"]
+            def audio_load_fn(x): return read_hdf5(x, "wave")  # NOQA
+            def mel_load_fn(x): return read_hdf5(x, feat_query)  # NOQA
         elif config["format"] == "npy":
             audio_query, mel_query = "*-wave.npy", "*-feats.npy"
             audio_load_fn = np.load

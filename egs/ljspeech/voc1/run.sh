@@ -22,7 +22,7 @@ dumpdir=/opt/storage/kurofune/parallel-wave-gan/data/lj-16000 # directory to dum
 
 # training related setting
 # tag="pwg-nemo-finetuning-v1-1" # tag for directory to save model
-tag="nemo-v1" # tag for directory to save model
+tag="nemo-v1-test" # tag for directory to save model
 resume=""               # checkpoint path to resume training
 # (e.g. <path>/<to>/checkpoint-10000steps.pkl)
 

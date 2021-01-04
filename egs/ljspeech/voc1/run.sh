@@ -14,7 +14,7 @@ n_gpus=1     # number of gpus in training
 n_jobs=16    # number of parallel jobs in feature extraction
 
 # NOTE(kan-bayashi): renamed to conf to avoid conflict in parse_options.sh
-conf=conf/parallel_wavegan.v1.nemo-ft-1.yaml
+conf=conf/parallel_wavegan.v1.nemo-1.yaml
 
 # directory path setting
 download_dir=/opt/storage/datasets/kurofune                   # direcotry to save downloaded files
@@ -22,7 +22,7 @@ dumpdir=/opt/storage/kurofune/parallel-wave-gan/data/lj-16000 # directory to dum
 
 # training related setting
 # tag="pwg-nemo-finetuning-v1-1" # tag for directory to save model
-tag="nemo" # tag for directory to save model
+tag="nemo-v1" # tag for directory to save model
 resume=""               # checkpoint path to resume training
 # (e.g. <path>/<to>/checkpoint-10000steps.pkl)
 

@@ -521,6 +521,7 @@ class Collater(object):
                  hop_size=256,
                  aux_context_window=2,
                  use_noise_input=False,
+                 use_nemo_feature = False
                  ):
         """Initialize customized collater for PyTorch DataLoader.
 
@@ -544,6 +545,8 @@ class Collater(object):
         self.start_offset = aux_context_window
         self.end_offset = -(self.batch_max_frames + aux_context_window)
         self.mel_threshold = self.batch_max_frames + 2 * aux_context_window
+
+        self.use_nemo_feature = use_nemo_feature
 
     def __call__(self, batch):
         """Convert into batch tensors.
@@ -569,12 +572,12 @@ class Collater(object):
         x_starts = start_frames * self.hop_size
         x_ends = x_starts + self.batch_max_steps
 
-        c_starts = start_frames - self.aux_context_window
-        c_ends = start_frames + self.batch_max_frames + self.aux_context_window
-
-        #NOTE: nemo用
-        # c_starts = x_starts // 320
-        # c_ends = x_ends // 320
+        if self.use_nemo_feature:
+            c_starts = x_starts // 320
+            c_ends = x_ends // 320
+        else:
+            c_starts = start_frames - self.aux_context_window
+            c_ends = start_frames + self.batch_max_frames + self.aux_context_window
 
         y_batch = [x[start: end] for x, start, end in zip(xs, x_starts, x_ends)]
         c_batch = [c[start: end] for c, start, end in zip(cs, c_starts, c_ends)]
@@ -767,6 +770,7 @@ def main():
         "dev": dev_dataset,
     }
 
+
     # get data loader
     collater = Collater(
         batch_max_steps=config["batch_max_steps"],
@@ -776,6 +780,7 @@ def main():
         # keep compatibility
         use_noise_input=config.get(
             "generator_type", "ParallelWaveGANGenerator") != "MelGANGenerator",
+        use_nemo_feature = config["use_nemo_feature"]
     )
     sampler = {"train": None, "dev": None}
     if args.distributed:

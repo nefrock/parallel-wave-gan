@@ -22,6 +22,8 @@ trim_frame_size: 2048    # Frame size in trimming.
 trim_hop_size: 512       # Hop size in trimming.
 format: "hdf5"           # Feature file format. "npy" or "hdf5" is supported.
 feat_query: "nemofeats-5x5-4th"
+use_nemo_feature: True
+
 
 ###########################################################
 #         GENERATOR NETWORK ARCHITECTURE SETTING          #

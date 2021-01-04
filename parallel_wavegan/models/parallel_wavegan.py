@@ -171,11 +171,10 @@ class ParallelWaveGANGenerator(torch.nn.Module):
 
         if c is not None and self.asr_layer is not None:
             c, _ = self.asr_layer.encoder[0:self.asr_feature_layer_nth](([c], None))
-
-        #TODO このコードがなぜ必要かよくわからない
-        if c is list:
-            assert len(c) == 1
-        c = c[0]
+            #TODO このコードがなぜ必要かよくわからない
+            if c is list:
+                 assert len(c) == 1
+            c = c[0]
 
         if c is not None and self.upsample_net is not None:
             c = self.upsample_net(c)

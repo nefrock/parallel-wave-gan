@@ -48,6 +48,7 @@ generator_params:
   upsample_net: "ConvInUpsampleNetwork" # Upsampling network architecture.
   upsample_params: # Upsampling network parameters.
     upsample_scales: [5, 4, 4, 4] # Upsampling scales. Prodcut of these must be the same as hop size.
+  use_nemo_feature: False
   use_asr_layer: True
   asr_config: "/workspace/parallel_wavegan/encoder-conf/quartznet_15x5.yaml"
   asr_pretrained_file: "/opt/storage/kurofune/nemo/QuartzNet15x5Base-En.pt"

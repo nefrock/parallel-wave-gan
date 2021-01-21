@@ -42,4 +42,10 @@ RUN pip3 install -r requirements-ext.txt
 RUN mkdir -p /root/.jupyter
 ADD jupyter_notebook_config.py /root/.jupyter/
 
+RUN apt-update
+RUN apt install -y --no-install-recommends \
+    unzip \
+    bc
+
+
 WORKDIR /workspace

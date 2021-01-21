@@ -28,7 +28,7 @@ else
     echo "Already exists. Skipped."
 fi
 
-if [ ! -e "${download_dir}/jsut_lab" ]; then
+if [ ! -e "${download_dir}/jsut-lab" ]; then
     cd "${download_dir}" || exit 1;
     git clone https://github.com/r9y9/jsut-lab
     for name in loanword128 repeat500 voiceactress100 basic5000 onomatopee300 travel1000 countersuffix26 precedent130 utparaphrase512; do

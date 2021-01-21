@@ -1,0 +1,21 @@
+jupyterlab
+deepspeech-gpu
+docopt
+tqdm
+tensorboardX
+lws <= 1.0
+nose
+pysptk
+nnmnkwii
+tensorflow-gpu == 1.15.3
+keras == 2.2.4
+pyworld
+gdown
+yq
+h5py
+kaldiio
+omegaconf>=2.0.2
+hydra-core>=1.0.3
+transformers>=4.0.0
+sentencepiece<1.0.0
+ruamel.yaml

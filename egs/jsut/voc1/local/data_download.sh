@@ -17,7 +17,9 @@ cwd=$(pwd)
 if [ ! -e "${download_dir}/jsut_ver1.1" ]; then
     mkdir -p "${download_dir}"
     cd "${download_dir}" || exit 1;
-    wget http://ss-takashi.sakura.ne.jp/corpus/jsut_ver1.1.zip
+    if [ ! -e "jsut_ver1.1.zip" ]; then
+        wget http://ss-takashi.sakura.ne.jp/corpus/jsut_ver1.1.zip
+    fi
     unzip -o ./*.zip
     rm ./*.zip
     cd "${cwd}" || exit 1;

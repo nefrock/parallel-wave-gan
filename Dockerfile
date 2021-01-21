@@ -36,6 +36,7 @@ WORKDIR /opt/initialization
 RUN pip3 install --upgrade pip
 ADD requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
+RUN pip3 install torch==1.7.1+cu110 torchvision==0.8.2+cu110 torchaudio===0.7.2 -f https://download.pytorch.org/whl/torch_stable.html
 ADD requirements-ext.txt requirements-ext.txt
 RUN pip3 install -r requirements-ext.txt
 RUN mkdir -p /root/.jupyter

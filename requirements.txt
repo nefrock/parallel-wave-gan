@@ -23,8 +23,6 @@ pandas
 easydict
 matplotlib
 notebook
-torch
-torchvision
 ipywidgets
 onnx
 onnxruntime
@@ -33,7 +31,6 @@ lmdb
 pillow
 nltk
 natsort
-torchsummary
 fire
 wandb
 ipykernel

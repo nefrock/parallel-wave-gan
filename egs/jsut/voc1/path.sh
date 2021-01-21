@@ -20,6 +20,7 @@ if ! command -v parallel-wavegan-train > /dev/null; then
     echo "Error: Please setup your environment by following README.md" >&2
     return 1
 fi
+
 if ! command -v jq > /dev/null; then
     echo "Error: It seems jq is not installed." >&2
     echo "Error: Please install via \`sudo apt-get install jq\`." >&2

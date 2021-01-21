@@ -10,18 +10,18 @@
 stage=-1       # stage to start
 stop_stage=100 # stage to stop
 verbose=1      # verbosity level (lower is less info)
-n_gpus=1       # number of gpus in training
-n_jobs=16      # number of parallel jobs in feature extraction
+n_gpus=2       # number of gpus in training
+n_jobs=32      # number of parallel jobs in feature extraction
 
 # NOTE(kan-bayashi): renamed to conf to avoid conflict in parse_options.sh
-conf=conf/parallel_wavegan.v1.yaml
+conf=conf/parallel_wavegan.kurofune.v1.yaml
 
 # directory path setting
 download_dir=downloads # direcotry to save downloaded files
 dumpdir=dump           # directory to dump features
 
 # training related setting
-tag=""     # tag for directory to save model
+tag="kurofune-jsut-v1"     # tag for directory to save model
 resume=""  # checkpoint path to resume training
            # (e.g. <path>/<to>/checkpoint-10000steps.pkl)
 
@@ -128,7 +128,7 @@ if [ "${stage}" -le 2 ] && [ "${stop_stage}" -ge 2 ]; then
     ${cuda_cmd} --gpu "${n_gpus}" "${expdir}/train.log" \
         ${train} \
             --config "${conf}" \
-            --train-dumpdir "${dumpdir}/${train_set}/norm" \
+            --train-dumpdir "${dumpdir}/${train_set}/norm"\
             --dev-dumpdir "${dumpdir}/${dev_set}/norm" \
             --outdir "${expdir}" \
             --resume "${resume}" \

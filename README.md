@@ -2,7 +2,7 @@
 
 ![](https://github.com/kan-bayashi/ParallelWaveGAN/workflows/CI/badge.svg) [![](https://img.shields.io/pypi/v/parallel-wavegan)](https://pypi.org/project/parallel-wavegan/) ![](https://img.shields.io/pypi/pyversions/parallel-wavegan) ![](https://img.shields.io/pypi/l/parallel-wavegan) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/espnet/notebook/blob/master/espnet2_tts_realtime_demo.ipynb)
 
-This repository provides **UNOFFICIAL** [PWG](https://arxiv.org/abs/1910.11480), [MelGAN](https://arxiv.org/abs/1910.06711), and [MB-MelGAN](https://arxiv.org/abs/2005.05106) implementations with Pytorch.  
+This repository provides **UNOFFICIAL** [PWG](https://arxiv.org/abs/1910.11480), [MelGAN](https://arxiv.org/abs/1910.06711), and [MB-MelGAN](https://arxiv.org/abs/2005.05106) implementations with Pytorch.
 You can combine these state-of-the-art non-autoregressive models to build your own great vocoder!
 
 Please check our samples in [our demo HP](https://kan-bayashi.github.io/ParallelWaveGAN).
@@ -11,7 +11,7 @@ Please check our samples in [our demo HP](https://kan-bayashi.github.io/Parallel
 
 > Source of the figure: https://arxiv.org/pdf/1910.11480.pdf
 
-The goal of this repository is to provide real-time neural vocoder, which is compatible with [ESPnet-TTS](https://github.com/espnet/espnet).  
+The goal of this repository is to provide real-time neural vocoder, which is compatible with [ESPnet-TTS](https://github.com/espnet/espnet).
 Also, this repository can be combined with [NVIDIA/tacotron2](https://github.com/NVIDIA/tacotron2)-based implementation (See [this comment](https://github.com/kan-bayashi/ParallelWaveGAN/issues/169#issuecomment-649320778)).
 
 You can try the real-time end-to-end text-to-speech demonstration in Google Colab!
@@ -44,11 +44,11 @@ This repository is tested on Ubuntu 16.04 with a GPU Titan V.
 - Cuda 10.0+
 - CuDNN 7+
 - NCCL 2+ (for distributed multi-gpu training)
-- libsndfile (you can install via `sudo apt install libsndfile-dev` in ubuntu)
+- libsndfile (you can lall via `sudo apt install libsndfile-dev` in ubuntu)
 - jq (you can install via `sudo apt install jq` in ubuntu)
 - sox (you can install via `sudo apt install sox` in ubuntu)
 
-Different cuda version should be working but not explicitly tested.  
+Different cuda version should be working but not explicitly tested.
 All of the codes are tested on Pytorch 1.0.1, 1.1, 1.2, 1.3.1, 1.4, 1.5.1, and 1.7.
 
 Pytorch 1.6 works but there are some issues in cpu mode (See #198).
@@ -67,7 +67,7 @@ $ pip install -e .
 # apex manually by following https://github.com/NVIDIA/apex
 $ ...
 ```
-Note that your cuda version must be exactly matched with the version used for the pytorch binary to install apex.  
+Note that your cuda version must be exactly matched with the version used for the pytorch binary to install apex.
 To install pytorch compiled with different cuda version, see `tools/Makefile`.
 
 ### B. Make virtualenv
@@ -81,12 +81,12 @@ $ make
 $ make apex
 ```
 
-Note that we specify cuda version used to compile pytorch wheel.  
+Note that we specify cuda version used to compile pytorch wheel.
 If you want to use different cuda version, please check `tools/Makefile` to change the pytorch wheel to be installed.
 
 ## Recipe
 
-This repository provides [Kaldi](https://github.com/kaldi-asr/kaldi)-style recipes, as the same as [ESPnet](https://github.com/espnet/espnet).  
+This repository provides [Kaldi](https://github.com/kaldi-asr/kaldi)-style recipes, as the same as [ESPnet](https://github.com/espnet/espnet).
 Currently, the following recipes are supported.
 
 - [LJSpeech](https://keithito.com/LJ-Speech-Dataset/): English female speaker
@@ -163,12 +163,12 @@ If you use Multi-band MelGAN's generator, the decoding speed will be much furthe
 2020-05-22 15:35:13,302 (decode:151) INFO: Finished generation of 250 utterances (RTF = 0.001).
 ```
 
-If you want to accelerate the inference more, it is worthwhile to try the conversion from pytorch to tensorflow.  
-The example of the conversion is available in [the notebook](https://github.com/kan-bayashi/ParallelWaveGAN/blob/master/notebooks/convert_melgan_from_pytorch_to_tensorflow.ipynb) (Provided by [@dathudeptrai](https://github.com/dathudeptrai)).  
+If you want to accelerate the inference more, it is worthwhile to try the conversion from pytorch to tensorflow.
+The example of the conversion is available in [the notebook](https://github.com/kan-bayashi/ParallelWaveGAN/blob/master/notebooks/convert_melgan_from_pytorch_to_tensorflow.ipynb) (Provided by [@dathudeptrai](https://github.com/dathudeptrai)).
 
 ## Results
 
-Here the results are summarized in the table.  
+Here the results are summarized in the table.
 You can listen to the samples and download pretrained models from the link to our google drive.
 
 | Model                                                                                                       | Conf                                                                                                                        | Lang  | Fs [Hz] | Mel range [Hz] | FFT / Hop / Win [pt] | # iters |
@@ -380,5 +380,5 @@ The author would like to thank Ryuichi Yamamoto ([@r9y9](https://github.com/r9y9
 
 ## Author
 
-Tomoki Hayashi ([@kan-bayashi](https://github.com/kan-bayashi))  
+Tomoki Hayashi ([@kan-bayashi](https://github.com/kan-bayashi))
 E-mail: `hayashi.tomoki<at>g.sp.m.is.nagoya-u.ac.jp`
